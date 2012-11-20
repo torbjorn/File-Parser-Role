@@ -90,6 +90,9 @@ This document describes Moosex::FileBased version 0.0.1
     exported, or methods that may be called on objects belonging to the
     classes provided by the module.
 
+=head2 fh
+
+returns ro filehandle (IO::File) to the contents of the file
 
 =head1 DIAGNOSTICS
 
