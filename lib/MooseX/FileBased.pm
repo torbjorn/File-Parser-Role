@@ -5,7 +5,7 @@ use strict;
 use Carp;
 use IO::String;
 
-use version; our $VERSION = qv('1.0.0');
+use version; our $VERSION = qv('1.0.1');
 use Moose::Role;
 
 # Module implementation here
@@ -70,7 +70,7 @@ MooseX::FileBased - [One line description of module's purpose here]
 
 =head1 VERSION
 
-This document describes MooseX::FileBased version 1.0.0. This is a
+This document describes MooseX::FileBased version 1.0.1. This is a
 Moose::Role for moose objects centered around reading (and parsing)
 single data files. It adds 3 kinds of constructors:
 
