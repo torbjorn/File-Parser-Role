@@ -5,7 +5,7 @@ use strict;
 use Carp;
 use IO::String;
 
-use version; our $VERSION = qv('0.1.0');
+use version; our $VERSION = qv('1.0.0');
 use Moose::Role;
 
 # Module implementation here
