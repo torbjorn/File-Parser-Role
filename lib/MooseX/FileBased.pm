@@ -49,7 +49,7 @@ sub BUILD {
 
     my $self = shift;
 
-    if ( -r $self->file ) {
+    if ( not ref $self->file and -r $self->file ) { ## should now be a filename that can be read
         $self->size( -s $self->file );
         $self->filename( $self->file );
     }
