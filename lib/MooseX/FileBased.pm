@@ -32,10 +32,8 @@ sub fh {
         return $self->file;
     }
     elsif ( -r $self->file ) {
-        $self->size( -s $self->file );
-        $self->filename( $self->file );
         my $fh = IO::File->new( $self->file, "r" );
-        ## read it with the (possibly) specified encoding
+        ## set it to the (possibly) specified encoding
         if ( defined $self->encoding ) {
             binmode $fh, sprintf(":encoding(%s)", $self->encoding) or croak $!;
         }
@@ -50,12 +48,19 @@ sub fh {
 sub BUILD {
 
     my $self = shift;
+
+    if ( -r $self->file ) {
+        $self->size( -s $self->file );
+        $self->filename( $self->file );
+    }
+
     $self->parse;
 
 }
 
 1; # Magic true value required at end of module
 __END__
+
 =encoding utf8
 
 =head1 NAME
