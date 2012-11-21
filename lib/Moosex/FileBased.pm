@@ -65,12 +65,63 @@ Moosex::FileBased - [One line description of module's purpose here]
 
 =head1 VERSION
 
-This document describes Moosex::FileBased version 0.0.1
+This document describes Moosex::FileBased version 1.0.0. This is a
+Moose::Role for moose objects centered around reading (and parsing)
+single data files. It adds 3 kinds of constructors:
 
+=over
+
+=item file names
+
+=item IO::Handle's
+
+=item scalar references to content
+
+=back
+
+It also provides a method "fh" that gives a file handle to the
+contents of the file.
 
 =head1 SYNOPSIS
 
-    use Moosex::FileBased;
+    package MyFileObject;
+
+    sub parse {
+        my $self = shift;
+
+        # ... do stuff, $self->fh available
+    }
+
+    with "Moosex::FileBased";
+
+    ## ... and in some nearby code:
+
+    my $fo = MyFileObject->new({ file => "some_file.txt" });
+    ## optinally:
+
+    my $fo = MyFileObject->new({ file => "some_file.txt", encoding => "utf8" });
+    ## encoding can be anything that binmode's encoding() can understand.
+
+    print $fo->filename; # "some_file.txt"
+    print $fo->size; # size of some_file.dat
+
+    ## - OR -
+
+    my $fh = IO::File->new( "< some_file.txt" );
+    ## you are now responsible for encoding on this handle!
+
+    my $fo = MyFileObject->new({ file => $fh });
+
+    ## no filename nor file size available
+
+    ## - OR -
+
+    my $file_content = read_file( "some_file.txt" );
+    my $fo = MyFileObject->new({ file => \$file_content });
+
+    ## you are now responsible for encoding on this data
+
+    ## no file name nor file size available
 
 =for author to fill in:
     Brief code example(s) here showing commonest usage(s).
