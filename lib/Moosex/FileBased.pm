@@ -2,8 +2,8 @@ package Moosex::FileBased;
 
 use warnings;
 use strict;
-use open ':locale';
 use Carp;
+use IO::String;
 
 use version; our $VERSION = qv('0.1.0');
 use Moose::Role;
@@ -11,9 +11,10 @@ use Moose::Role;
 # Module implementation here
 
 # File things
-has file     =>  ( isa => "Any",            is => "rw"                     );
-has size     =>  ( isa => "Int",            is => "rw", default => 0       );
-has filename =>  ( isa => "Str",            is => "rw"                     );
+has file     =>  ( isa => "Any",   is => "rw"   );
+has size     =>  ( isa => "Int",   is => "rw"   );
+has filename =>  ( isa => "Str",   is => "rw"   );
+has encoding =>  ( isa => "Str",   is => "rw"   );
 
 requires "parse";
 
@@ -35,7 +36,9 @@ sub fh {
         $self->filename( $self->file );
         my $fh = IO::File->new( $self->file, "r" );
         ## read it with the (possibly) specified encoding
-        binmode $fh, ":" . $self->encoding;
+        if ( defined $self->encoding ) {
+            binmode $fh, sprintf(":encoding(%s)", $self->encoding) or croak $!;
+        }
         return $fh;
     }
     else {
