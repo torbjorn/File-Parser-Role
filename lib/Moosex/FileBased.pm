@@ -103,7 +103,7 @@ contents of the file.
     ## encoding can be anything that binmode's encoding() can understand.
 
     print $fo->filename; # "some_file.txt"
-    print $fo->size; # size of some_file.dat
+    print $fo->size; # size of some_file.txt
 
     ## - OR -
 
