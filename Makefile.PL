@@ -3,10 +3,10 @@ use warnings;
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-    NAME                => 'Moosex::FileBased',
+    NAME                => 'MooseX::FileBased',
     AUTHOR              => 'Torbjørn Lindahl <torbjorn.lindahl@diagenic.com>',
-    VERSION_FROM        => 'lib/Moosex/FileBased.pm',
-    ABSTRACT_FROM       => 'lib/Moosex/FileBased.pm',
+    VERSION_FROM        => 'lib/MooseX/FileBased.pm',
+    ABSTRACT_FROM       => 'lib/MooseX/FileBased.pm',
     PL_FILES            => {},
     PREREQ_PM => {
                   'Test::More' => 0,
@@ -20,5 +20,5 @@ WriteMakefile(
                   'Pod::Coverage::Moose' => 0,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean               => { FILES => 'Moosex-FileBased-*' },
+    clean               => { FILES => 'MooseX-FileBased-*' },
 );

@@ -1,4 +1,4 @@
-package Moosex::FileBased;
+package MooseX::FileBased;
 
 use warnings;
 use strict;
@@ -60,12 +60,12 @@ __END__
 
 =head1 NAME
 
-Moosex::FileBased - [One line description of module's purpose here]
+MooseX::FileBased - [One line description of module's purpose here]
 
 
 =head1 VERSION
 
-This document describes Moosex::FileBased version 1.0.0. This is a
+This document describes MooseX::FileBased version 1.0.0. This is a
 Moose::Role for moose objects centered around reading (and parsing)
 single data files. It adds 3 kinds of constructors:
 
@@ -92,7 +92,7 @@ contents of the file.
         # ... do stuff, $self->fh available
     }
 
-    with "Moosex::FileBased";
+    with "MooseX::FileBased";
 
     ## ... and in some nearby code:
 
@@ -180,7 +180,7 @@ returns ro filehandle (IO::File) to the contents of the file
     that can be set. These descriptions must also include details of any
     configuration language used.
 
-Moosex::FileBased requires no configuration files or environment variables.
+MooseX::FileBased requires no configuration files or environment variables.
 
 
 =head1 DEPENDENCIES

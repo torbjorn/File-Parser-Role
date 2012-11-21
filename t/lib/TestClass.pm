@@ -12,5 +12,5 @@ sub parse {
 
 }
 
-with "Moosex::FileBased";
+with "MooseX::FileBased";
 
