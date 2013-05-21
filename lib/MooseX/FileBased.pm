@@ -35,7 +35,7 @@ sub fh {
         my $fh = IO::File->new( $self->file, "r" );
         ## set it to the (possibly) specified encoding
         if ( defined $self->encoding ) {
-            binmode $fh, sprintf(":encoding(%s)", $self->encoding) or croak $!;
+            binmode $fh, sprintf(":encoding(%s)", $self->encoding) or confess $!;
         }
         return $fh;
     }
@@ -49,7 +49,9 @@ sub BUILD {
 
     my $self = shift;
 
-    if ( not ref $self->file and -r $self->file ) { ## should now be a filename that can be read
+    if ( not ref $self->file and -r $self->file ) {
+        ## should now be a filename that can be read
+        ## so that size and filename can be set
         $self->size( -s $self->file );
         $self->filename( $self->file );
     }
@@ -65,8 +67,8 @@ __END__
 
 =head1 NAME
 
-MooseX::FileBased - [One line description of module's purpose here]
-
+MooseX::FileBased - Avoid copy paste code when working with objects
+that parse or read a file
 
 =head1 VERSION
 
@@ -84,12 +86,12 @@ single data files. It adds 3 kinds of constructors:
 
 =back
 
-It also provides a method "fh" that gives a file handle to the
-contents of the file.
+It also provides a method "fh" that gives an at least readable file
+handle to the contents of the file.
 
 =head1 SYNOPSIS
 
-    package MyFileObject;
+    package MyClassThatDoesStuffToAFile;
 
     sub parse {
         my $self = shift;
@@ -101,28 +103,28 @@ contents of the file.
 
     ## ... and in some nearby code:
 
-    my $fo = MyFileObject->new({ file => "some_file.txt" });
+    my $fo = MyClassThatDoesStuffToAFile->new({ file => "some_file.txt" });
     ## optinally:
 
-    my $fo = MyFileObject->new({ file => "some_file.txt", encoding => "utf8" });
+    my $fo = MyClassThatDoesStuffToAFile->new({ file => "some_file.txt", encoding => "utf8" });
     ## encoding can be anything that binmode's encoding() can understand.
 
     print $fo->filename; # "some_file.txt"
-    print $fo->size; # size of some_file.txt
+    print $fo->size;     # size of some_file.txt
 
     ## - OR -
 
     my $fh = IO::File->new( "< some_file.txt" );
     ## you are now responsible for encoding on this handle!
 
-    my $fo = MyFileObject->new({ file => $fh });
+    my $fo = MyClassThatDoesStuffToAFile->new({ file => $fh });
 
     ## no filename nor file size available
 
     ## - OR -
 
     my $file_content = read_file( "some_file.txt" );
-    my $fo = MyFileObject->new({ file => \$file_content });
+    my $fo = MyClassThatDoesStuffToAFile->new({ file => \$file_content });
 
     ## you are now responsible for encoding on this data
 
@@ -163,15 +165,10 @@ returns ro filehandle (IO::File) to the contents of the file
 
 =over
 
-=item C<< Error message here, perhaps with %s placeholders >>
+=item C<< Cannot work with input file >>
 
-[Description of error here]
-
-=item C<< Another error message here >>
-
-[Description of error here]
-
-[Et cetera, et cetera]
+The file argument is neither a readable file, an object nor a
+reference to content
 
 =back
 
@@ -196,7 +193,15 @@ MooseX::FileBased requires no configuration files or environment variables.
     the module is part of the standard Perl distribution, part of the
     module's distribution, or must be installed separately. ]
 
-None.
+  File::Slurp
+  IO::String
+  Moose
+  Moose::Role
+  Pod::Coverage::Moose
+  Test::Most
+  Test::Perl::Critic
+  Test::Pod
+  Test::Pod::Coverage
 
 
 =head1 INCOMPATIBILITIES
@@ -236,7 +241,8 @@ Torbjørn Lindahl  C<< <torbjorn.lindahl@diagenic.com> >>
 
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2012, Torbjørn Lindahl C<< <torbjorn.lindahl@diagenic.com> >>. All rights reserved.
+Copyright (c) 2012, Torbjørn Lindahl C<<
+<torbjorn.lindahl@diagenic.com> >>. All rights reserved.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
