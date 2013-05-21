@@ -67,8 +67,8 @@ __END__
 
 =head1 NAME
 
-MooseX::FileBased - Avoid copy paste code when working with objects
-that parse or read a file
+MooseX::FileBased - Read and prepare parsing of file (or glob) data
+from some source
 
 =head1 VERSION
 
