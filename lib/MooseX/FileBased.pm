@@ -5,7 +5,7 @@ use strict;
 use Carp;
 use IO::String;
 
-use version; our $VERSION = qv('1.0.1');
+use version; our $VERSION = qv('1.0.2');
 use Moose::Role;
 
 # Module implementation here
@@ -45,7 +45,9 @@ sub fh {
 
 }
 
-sub BUILD {
+sub BUILD {}
+
+after BUILD => sub {
 
     my $self = shift;
 
@@ -58,7 +60,7 @@ sub BUILD {
 
     $self->parse;
 
-}
+};
 
 1; # Magic true value required at end of module
 __END__
