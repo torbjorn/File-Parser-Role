@@ -45,18 +45,35 @@ sub fh {
 
 }
 
+around BUILDARGS => sub {
+
+    my $orig = shift;
+    my $class = shift;
+
+    my @args = @_;
+
+    if ( @args == 1 and ref $args[0] ne "HASH" ) {
+        @args = ({ file => $args[0] });
+    }
+
+    my $f = $args[0]->{file};
+
+    if ( not ref $f and -r $f ) {
+        ## should now be a filename that can be read
+        ## so that size and filename can be set
+        $args[0]->{size} = -s $f;
+        $args[0]->{filename} = $f;
+    }
+
+    return $class->$orig(@args);
+
+};
+
 sub BUILD {}
 
 after BUILD => sub {
 
     my $self = shift;
-
-    if ( not ref $self->file and -r $self->file ) {
-        ## should now be a filename that can be read
-        ## so that size and filename can be set
-        $self->size( -s $self->file );
-        $self->filename( $self->file );
-    }
 
     $self->parse;
 
