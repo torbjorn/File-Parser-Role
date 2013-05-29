@@ -58,7 +58,7 @@ around BUILDARGS => sub {
 
     my $f = $args[0]->{file};
 
-    if ( not ref $f and -r $f ) {
+    if ( defined $f and not ref $f and -r $f ) {
         ## should now be a filename that can be read
         ## so that size and filename can be set
         $args[0]->{size} = -s $f;

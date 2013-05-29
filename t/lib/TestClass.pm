@@ -1,5 +1,8 @@
 package TestClass;
 
+use strict;
+use warnings;
+
 use Moose;
 use File::Slurp;
 
@@ -13,4 +16,3 @@ sub parse {
 }
 
 with "MooseX::FileBased";
-
