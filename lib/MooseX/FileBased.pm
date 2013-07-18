@@ -3,6 +3,7 @@ package MooseX::FileBased;
 use warnings;
 use strict;
 use Carp;
+use IO::File;
 use IO::String;
 
 use version; our $VERSION = qv('1.0.2');
