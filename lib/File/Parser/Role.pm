@@ -119,10 +119,12 @@ with "File::Parser::Role";
 
 ## ... and in some nearby code:
 
-my $obj = MyClassThatDoesStuffToAFile->new({ file => "some_file.txt" });
+my $obj = MyClassThatDoesStuffToAFile->new("some_file.txt");
+# or #
+my $obj = MyClassThatDoesStuffToAFile->new(file => "some_file.txt");
 ## optinally:
 
-my $obj = MyClassThatDoesStuffToAFile->new({ file => "some_file.txt", encoding => "utf8" });
+my $obj = MyClassThatDoesStuffToAFile->new( file => "some_file.txt", encoding => "utf8" );
 ## encoding can be anything that binmode's encoding() can understand.
 
 print $obj->filename; # "some_file.txt"
@@ -133,23 +135,17 @@ print $obj->size;     # size of some_file.txt
 my $fh = IO::File->new( "< some_file.txt" );
 ## you are now responsible for encoding on this handle!
 
-my $obj = MyClassThatDoesStuffToAFile->new({ file => $fh });
+my $obj = MyClassThatDoesStuffToAFile->new( file => $fh );
 
 ## no filename nor file size available
 
 ## - OR -
 
 my $file_content = read_file( "some_file.txt" );
-my $obj = MyClassThatDoesStuffToAFile->new({ file => \$file_content });
+my $obj = MyClassThatDoesStuffToAFile->new( file => \$file_content );
 
-## you are now responsible for encoding on this data
+## you are also responsible for encoding on this data
 ## no file name nor file size available
-
-=for author to fill in:
-    Brief code example(s) here showing commonest usage(s).
-    This section will be as far as many users bother reading
-    so make it as educational and exeplary as possible.
-
 
 =head1 DESCRIPTION
 
@@ -169,6 +165,10 @@ my $obj = MyClassThatDoesStuffToAFile->new({ file => \$file_content });
 =head2 fh
 
 returns ro filehandle (IO::File) to the contents of the file
+
+=head2 parse
+
+a required method that you must write!
 
 =head1 DIAGNOSTICS
 
