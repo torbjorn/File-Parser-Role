@@ -89,16 +89,16 @@ from some source
 =head1 VERSION
 
 This document describes File::Parser::Role version 1.0.1. This is a
-Moo::Role for moo objects centered around reading (and parsing)
-single data files. It adds 3 kinds of constructors:
+Moo::Role for reading (and then parsing) single data files. It makes
+the constructor support 3 kinds of file sources:
 
 =over
 
-=item file names
+=item a path to a readable file
 
-=item IO::Handle's
+=item a file handle or anything that can be read like one
 
-=item scalar references to content
+=item a scalar references to content
 
 =back
 
