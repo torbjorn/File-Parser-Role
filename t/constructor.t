@@ -4,8 +4,10 @@ use strict;
 use warnings;
 
 use Test::Most;
+use Test::Warnings;
 use File::Slurp;
 use IO::File;
+use Path::Tiny;
 
 use lib 't/lib';
 use TestClass;
@@ -13,15 +15,15 @@ use TestClass;
 use Encode;
 
 my $builder = Test::More->builder;
-binmode $builder->output, ":utf8";
-binmode $builder->failure_output, ":utf8";
-binmode $builder->todo_output, ":utf8";
+binmode $builder->output         , ":utf8";
+binmode $builder->failure_output , ":utf8";
+binmode $builder->todo_output    , ":utf8";
 
 my $latin1_test_file = "t/test_data/some_file_latin1.txt";
-my $utf8_test_file = "t/test_data/some_file_utf8.txt";
-my $binary_file = "t/test_data/some_file_binary.data";
+my $utf8_test_file   = "t/test_data/some_file_utf8.txt";
+my $binary_file      = "t/test_data/some_file_binary.data";
 
-plan tests => 9*4 + 2*4;
+plan tests => 33;
 
 sub file_test_1 {
 
@@ -32,7 +34,6 @@ sub file_test_1 {
     }
 
     my $f1 = TestClass->new(@_);
-    isa_ok( $f1, "TestClass" );
     is( length $f1->blob, -s $latin1_test_file, "file size matches contents length" );
     is( $f1->blob, read_file($latin1_test_file), "read data matches file content");
 
@@ -57,7 +58,6 @@ sub test_files {
     note( "utf8 file tests" );
 
     my $f2 = TestClass->new({file => $files[1], encoding => "utf8" });
-    isa_ok( $f2, "TestClass" );
     is( $f1->blob, $f2->blob, "latin1 and utf8 content identical" );
 
     is( read_file($utf8_test_file, { binmode => ":utf8" } ),
@@ -71,7 +71,6 @@ sub test_files {
 
     note( "binary file tests" );
     my $f3 = TestClass->new({file => $files[2] });
-    isa_ok( $f3, "TestClass" );
     is( -s $binary_file, length $f3->blob, "file size matches contents length" );
     is( read_file($binary_file), $f3->blob, "read data matches file content");
 
@@ -91,8 +90,8 @@ test_files( $latin1_test_file, $utf8_test_file, $binary_file );
 note("Testing on IO::File's");
 my @io_files = (
                 IO::File->new( "< $latin1_test_file" ),
-                IO::File->new( "< $utf8_test_file" ),
-                IO::File->new( "< $binary_file" ),
+                IO::File->new( "< $utf8_test_file"   ),
+                IO::File->new( "< $binary_file"      ),
                );
 binmode $io_files[1], ":utf8";
 test_files( @io_files );
@@ -100,9 +99,9 @@ test_files( @io_files );
 
 note("Testing on scalar references");
 test_files(
-           \read_file( "$latin1_test_file" ),
-           \read_file( "$utf8_test_file", { binmode => ":utf8" } ),
-           \read_file( "$binary_file" ),
+           \path( "$latin1_test_file" )->slurp,
+           \path( "$utf8_test_file"   )->slurp_utf8,
+           \path( "$binary_file"      )->slurp,
           );
 
 done_testing;
