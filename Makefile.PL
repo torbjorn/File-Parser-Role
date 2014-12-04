@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 use ExtUtils::MakeMaker;
+use utf8;
 
 WriteMakefile(
     NAME                => 'File::Parser::Role',

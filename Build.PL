@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 use Module::Build;
+use utf8;
 
 my $builder = Module::Build->new(
     module_name         => 'File::Parser::Role',

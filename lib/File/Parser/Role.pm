@@ -2,6 +2,7 @@ package File::Parser::Role;
 
 use warnings;
 use strict;
+use utf8;
 use Carp;
 use IO::File;
 use IO::String;
