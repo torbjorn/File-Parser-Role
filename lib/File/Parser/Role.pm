@@ -43,9 +43,8 @@ sub fh {
         return $self->file;
     }
     else {
-        confess "Cannot work with input file";
+        confess "Cannot work with input file - its neither a readable path nor a reference";
     }
-
 }
 
 around BUILDARGS => sub {
