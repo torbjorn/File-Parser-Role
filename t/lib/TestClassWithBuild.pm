@@ -4,14 +4,15 @@ use strict;
 use warnings;
 
 use Moose;
-use File::Slurp;
 
 has blob => ( isa => "Any", is => "rw" );
 
 sub parse {
 
     my $self = shift;
-    $self->blob( read_file( $self->fh ));
+    local $/;
+    my $fh = $self->fh;
+    $self->blob( <$fh> );
 
 }
 
@@ -20,6 +21,6 @@ sub BUILD {
     print $self->filename, "\n";
 }
 
-with "Parser::Moosey";
+with "File::Parser::Role";
 
 1;
