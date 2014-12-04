@@ -3,10 +3,10 @@ use warnings;
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-    NAME                => 'MooseX::FileBased',
+    NAME                => 'File::Parser::Role',
     AUTHOR              => 'Torbjørn Lindahl <torbjorn.lindahl@diagenic.com>',
-    VERSION_FROM        => 'lib/MooseX/FileBased.pm',
-    ABSTRACT_FROM       => 'lib/MooseX/FileBased.pm',
+    VERSION_FROM        => 'lib/File/Parser/Role.pm',
+    ABSTRACT_FROM       => 'lib/File/Parser/Role.pm',
     PL_FILES            => {},
     PREREQ_PM => {
                   'File::Slurp'          => '9999.19',

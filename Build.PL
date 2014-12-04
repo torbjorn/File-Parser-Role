@@ -3,10 +3,10 @@ use warnings;
 use Module::Build;
 
 my $builder = Module::Build->new(
-    module_name         => 'MooseX::FileBased',
+    module_name         => 'File::Parser::Role',
     license             => 'perl',
     dist_author         => 'Torbjørn Lindahl <torbjorn.lindahl@diagenic.com>',
-    dist_version_from   => 'lib/MooseX/FileBased.pm',
+    dist_version_from   => 'lib/File/Parser/Role.pm',
     requires => {
                  'File::Slurp'          => '9999.19',
                  'IO::String'           => '1.08',

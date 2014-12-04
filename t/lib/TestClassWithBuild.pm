@@ -20,6 +20,6 @@ sub BUILD {
     print $self->filename, "\n";
 }
 
-with "MooseX::FileBased";
+with "Parser::Moosey";
 
 1;

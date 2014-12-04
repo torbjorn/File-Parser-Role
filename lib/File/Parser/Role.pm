@@ -1,4 +1,4 @@
-package MooseX::FileBased;
+package File::Parser::Role;
 
 use warnings;
 use strict;
@@ -87,12 +87,12 @@ __END__
 
 =head1 NAME
 
-MooseX::FileBased - Read and prepare parsing of file (or glob) data
+File::Parser::Role - Read and prepare parsing of file (or glob) data
 from some source
 
 =head1 VERSION
 
-This document describes MooseX::FileBased version 1.0.1. This is a
+This document describes File::Parser::Role version 1.0.1. This is a
 Moose::Role for moose objects centered around reading (and parsing)
 single data files. It adds 3 kinds of constructors:
 
@@ -119,7 +119,7 @@ sub parse {
     # ... do stuff, $self->fh available
 }
 
-with "MooseX::FileBased";
+with "File::Parser::Role";
 
 ## ... and in some nearby code:
 
@@ -201,7 +201,7 @@ reference to content
     that can be set. These descriptions must also include details of any
     configuration language used.
 
-MooseX::FileBased requires no configuration files or environment variables.
+File::Parser::Role requires no configuration files or environment variables.
 
 
 =head1 DEPENDENCIES

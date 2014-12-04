@@ -15,4 +15,4 @@ sub parse {
 
 }
 
-with "MooseX::FileBased";
+with "Parser::Moosey";

@@ -1,7 +1,7 @@
 use Test::More tests => 1;
 
 BEGIN {
-use_ok( 'MooseX::FileBased' );
+use_ok( 'File::Parser::Role' );
 }
 
-diag( "Testing MooseX::FileBased $MooseX::FileBased::VERSION" );
+diag( "Testing File::Parser::Role $File::Parser::Role::VERSION" );
