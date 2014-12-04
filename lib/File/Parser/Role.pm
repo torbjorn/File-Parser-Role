@@ -89,7 +89,7 @@ from some source
 =head1 VERSION
 
 This document describes File::Parser::Role version 1.0.1. This is a
-Moose::Role for moose objects centered around reading (and parsing)
+Moo::Role for moo objects centered around reading (and parsing)
 single data files. It adds 3 kinds of constructors:
 
 =over
@@ -208,10 +208,7 @@ File::Parser::Role requires no configuration files or environment variables.
     the module is part of the standard Perl distribution, part of the
     module's distribution, or must be installed separately. ]
 
-  File::Slurp
   IO::String
-  Moose
-  Moose::Role
   Pod::Coverage::Moose
   Test::Most
   Test::Perl::Critic

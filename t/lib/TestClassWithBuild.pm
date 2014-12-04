@@ -3,9 +3,9 @@ package TestClassWithBuild;
 use strict;
 use warnings;
 
-use Moose;
+use Moo;
 
-has blob => ( isa => "Any", is => "rw" );
+has blob => ( is => "rw" );
 
 sub parse {
 

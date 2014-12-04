@@ -5,7 +5,6 @@ use warnings;
 
 use Test::Most;
 use Test::Warnings;
-use File::Slurp;
 use IO::File;
 use Path::Tiny;
 
@@ -35,7 +34,7 @@ sub file_test_1 {
 
     my $f1 = TestClass->new(@_);
     is( length $f1->blob, -s $latin1_test_file, "file size matches contents length" );
-    is( $f1->blob, read_file($latin1_test_file), "read data matches file content");
+    is( $f1->blob, path($latin1_test_file)->slurp, "read data matches file content");
 
     if ( not ref $file ) {
         is( $f1->filename, $latin1_test_file, "file name picked up" );
@@ -60,7 +59,7 @@ sub test_files {
     my $f2 = TestClass->new({file => $files[1], encoding => "utf8" });
     is( $f1->blob, $f2->blob, "latin1 and utf8 content identical" );
 
-    is( read_file($utf8_test_file, { binmode => ":utf8" } ),
+    is( path($utf8_test_file)->slurp_utf8,
         $f2->blob, "read data matches file content");
 
     if ( not ref $files[0] ) {
@@ -72,7 +71,7 @@ sub test_files {
     note( "binary file tests" );
     my $f3 = TestClass->new({file => $files[2] });
     is( -s $binary_file, length $f3->blob, "file size matches contents length" );
-    is( read_file($binary_file), $f3->blob, "read data matches file content");
+    is( path($binary_file)->slurp, $f3->blob, "read data matches file content");
 
     if ( not ref $files[0] ) {
         is( $f3->filename, $binary_file, "file name picked up" );

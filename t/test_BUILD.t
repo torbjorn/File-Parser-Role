@@ -6,8 +6,6 @@ use warnings;
 use Test::Most;
 use Test::Output;
 
-use File::Slurp;
-
 use lib 't/lib';
 use TestClassWithBuild;
 
