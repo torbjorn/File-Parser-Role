@@ -7,15 +7,16 @@ use IO::File;
 use IO::String;
 
 use version; our $VERSION = qv('1.0.2');
-use Moose::Role;
+use Moo::Role;
 
 # Module implementation here
 
 # File things
-has file     =>  ( isa => "Any",   is => "rw"   );
-has size     =>  ( isa => "Int",   is => "rw"   );
-has filename =>  ( isa => "Str",   is => "rw"   );
-has encoding =>  ( isa => "Str",   is => "rw"   );
+has file     =>  ( is => "ro"   );
+has size     =>  ( is => "ro"   );
+has filename =>  ( is => "ro"   );
+has encoding =>  ( is => "ro"   );
+has _fh      =>  ( is => "rw"   );
 
 requires "parse";
 
@@ -23,7 +24,15 @@ sub fh {
 
     my $self = shift;
 
-    if ( ref $self->file eq "SCALAR" ) {
+    if ( -r "${\ $self->file }" ) {
+        my $fh = IO::File->new( $self->file, "r" );
+        ## set it to the (possibly) specified encoding
+        if ( defined $self->encoding ) {
+            binmode $fh, sprintf(":encoding(%s)", $self->encoding) or confess $!;
+        }
+        return $fh;
+    }
+    elsif ( ref $self->file eq "SCALAR" ) {
         ## encoding won't be an issue as content already exists
         return IO::String->new( $self->file );
     }
@@ -31,14 +40,6 @@ sub fh {
         ## assume its something that can be read from as a file handle
         ## - the source of this is in charge of encoding for now
         return $self->file;
-    }
-    elsif ( -r $self->file ) {
-        my $fh = IO::File->new( $self->file, "r" );
-        ## set it to the (possibly) specified encoding
-        if ( defined $self->encoding ) {
-            binmode $fh, sprintf(":encoding(%s)", $self->encoding) or confess $!;
-        }
-        return $fh;
     }
     else {
         confess "Cannot work with input file";
@@ -48,18 +49,18 @@ sub fh {
 
 around BUILDARGS => sub {
 
-    my $orig = shift;
-    my $class = shift;
+    my ($orig, $class) = (shift, shift);
 
     my @args = @_;
 
-    if ( @args == 1 and ref $args[0] ne "HASH" ) {
+    if ( @args == 1 and (ref( $args[0])||'') ne 'HASH' ) {
         @args = ({ file => $args[0] });
     }
 
     my $f = $args[0]->{file};
 
-    if ( defined $f and not ref $f and -r $f ) {
+    ## test if it seems to be a file
+    if ( defined $f and -r "$f" ) {
         ## should now be a filename that can be read
         ## so that size and filename can be set
         $args[0]->{size} = -s $f;
@@ -70,14 +71,9 @@ around BUILDARGS => sub {
 
 };
 
-sub BUILD {}
-
-after BUILD => sub {
-
+sub BUILD {
     my $self = shift;
-
     $self->parse;
-
 };
 
 1; # Magic true value required at end of module
@@ -249,7 +245,7 @@ None reported.
 No bugs have been reported.
 
 Please report any bugs or feature requests to
-C<bug-moosex-filebased@rt.cpan.org>, or through the web interface at
+C<bug-file-parser-role@rt.cpan.org>, or through the web interface at
 L<http://rt.cpan.org>.
 
 
