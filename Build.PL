@@ -20,6 +20,7 @@ my $builder = Module::Build->new(
         'Test::Pod::Coverage'  => '1.08',
         'Test::Output'         => '1.02',
         'Test::Warnings'       => '0.010',
+        'MooX::Aliases'        => '0.001',
     },
     add_to_cleanup      => [ 'File-Parser-Role-*' ],
 );
