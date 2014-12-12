@@ -21,6 +21,7 @@ WriteMakefile(
         'Test::Pod::Coverage'  => '1.08',
         'Test::Output'         => '1.02',
         'Test::Warnings'       => '0.010',
+        'MooX::Aliases'        => '0.001',
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'File-Parser-Role-*' },
