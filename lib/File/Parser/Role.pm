@@ -9,11 +9,10 @@ use IO::String;
 
 use version; our $VERSION = qv('1.0.2');
 use Moo::Role;
-
-# Module implementation here
+use MooX::Aliases;
 
 # File things
-has file     =>  ( is => "ro"   );
+has file     =>  ( is => "ro", alias => [qw/path filepath uri url/] );
 has size     =>  ( is => "ro"   );
 has filename =>  ( is => "ro"   );
 has encoding =>  ( is => "ro"   );
@@ -25,18 +24,25 @@ sub fh {
 
     my $self = shift;
 
+    ## If stringified input is a readable file, treat it like that
     if ( -r "${\ $self->file }" ) {
+
         my $fh = IO::File->new( $self->file, "r" );
+
         ## set it to the (possibly) specified encoding
         if ( defined $self->encoding ) {
             binmode $fh, sprintf(":encoding(%s)", $self->encoding) or confess $!;
         }
         return $fh;
+
     }
+    ## A scalar reference is assumed to be content to be parsed
     elsif ( ref $self->file eq "SCALAR" ) {
-        ## encoding won't be an issue as content already exists
+
         return IO::String->new( $self->file );
+
     }
+    ## If it's some other sort of object, assume it can be <read> from
     elsif ( ref $self->file ) {
         ## assume its something that can be read from as a file handle
         ## - the source of this is in charge of encoding for now
@@ -45,6 +51,7 @@ sub fh {
     else {
         confess "Cannot work with input file - its neither a readable path nor a reference";
     }
+
 }
 
 around BUILDARGS => sub {
@@ -57,14 +64,25 @@ around BUILDARGS => sub {
         @args = ({ file => $args[0] });
     }
 
+    if ( not exists $args[0]->{file} and exists $args[0]->{filename} ) {
+        ## delete it now, so that it is set again later if valid
+        $args[0]->{file} = delete $args[0]->{filename};
+    }
+
     my $f = $args[0]->{file};
 
     ## test if it seems to be a file
     if ( defined $f and -r "$f" ) {
-        ## should now be a filename that can be read
-        ## so that size and filename can be set
-        $args[0]->{size} = -s $f;
+
+        ## size (most likely) and filename can now be set
+
+        ## only sets/overrides size if it is found to be something or
+        ## isn't already set
+        $args[0]->{size} = -s $f if -s $f or not exists $args[0]->{size};
+
+        ## set/override filename at this point
         $args[0]->{filename} = $f;
+
     }
 
     return $class->$orig(@args);
@@ -207,14 +225,6 @@ File::Parser::Role requires no configuration files or environment variables.
     including any restrictions on versions, and an indication whether
     the module is part of the standard Perl distribution, part of the
     module's distribution, or must be installed separately. ]
-
-  IO::String
-  Pod::Coverage::Moose
-  Test::Most
-  Test::Perl::Critic
-  Test::Pod
-  Test::Pod::Coverage
-
 
 =head1 INCOMPATIBILITIES
 
