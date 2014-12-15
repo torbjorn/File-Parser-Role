@@ -12,7 +12,6 @@ WriteMakefile(
     PREREQ_PM => {
         'Moo'                  => '1.006001',
         'Moo::Role'            => '1.006001',
-        'Path::Tiny'           => '0.051',
         'IO::String'           => '1.08',
         'Pod::Coverage::Moose' => '0.02',
         'Test::Most'           => '0.34',

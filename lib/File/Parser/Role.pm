@@ -7,7 +7,7 @@ use Carp;
 use IO::File;
 use IO::String;
 
-use version; our $VERSION = qv('1.0.2');
+use version; our $VERSION = qv('0.0.2');
 use Moo::Role;
 use MooX::Aliases;
 
@@ -80,7 +80,7 @@ around BUILDARGS => sub {
 
     my $f = $obj->{file};
 
-    ## test if it seems to be a file
+    ## test if it seems to be a path to a file
     if ( defined $f and -r "$f" ) {
 
         ## size (most likely) and filename can now be set
@@ -115,7 +115,7 @@ from some source
 
 =head1 VERSION
 
-This document describes File::Parser::Role version 1.0.1. This is a
+This document describes File::Parser::Role version 0.0.2. This is a
 Moo::Role for reading (and then parsing) single data files. It makes
 the constructor support 3 kinds of file sources:
 

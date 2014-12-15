@@ -1,19 +1,9 @@
-File-Parser-Role version 0.0.1
+File-Parser-Role version 0.0.2
 
-[ REPLACE THIS...
+A simple role to make life easier when you parse files.
 
-  The README is used to introduce the module and provide instructions on
-  how to install the module, any machine dependencies it may have (for
-  example C compilers and installed libraries) and any other information
-  that should be understood before the module is installed.
-
-  A README file is required for CPAN modules since CPAN extracts the
-  README file from a module distribution so that people browsing the
-  archive can use it get an idea of the modules uses. It is usually a
-  good idea to provide version information here so that people can
-  decide whether fixes for the module are worth downloading.
-]
-
+It gives you a file handle to the input and runs a parse method that
+you writes.
 
 INSTALLATION
 
@@ -36,10 +26,9 @@ DEPENDENCIES
 
 None.
 
-
 COPYRIGHT AND LICENCE
 
-Copyright (C) 2012, Torbjørn Lindahl
+Copyright (C) 2014, Torbjørn Lindahl
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

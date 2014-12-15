@@ -3,6 +3,7 @@ use warnings;
 use Module::Build;
 use utf8;
 
+
 my $builder = Module::Build->new(
     module_name         => 'File::Parser::Role',
     license             => 'perl',
@@ -11,7 +12,6 @@ my $builder = Module::Build->new(
     requires => {
         'Moo'                  => '1.006001',
         'Moo::Role'            => '1.006001',
-        'Path::Tiny'           => '0.051',
         'IO::String'           => '1.08',
         'Pod::Coverage::Moose' => '0.02',
         'Test::Most'           => '0.34',
