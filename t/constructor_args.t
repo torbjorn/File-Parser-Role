@@ -22,7 +22,7 @@ my $latin1_test_file = "t/test_data/some_file_latin1.txt";
 my $utf8_test_file   = "t/test_data/some_file_utf8.txt";
 my $binary_file      = "t/test_data/some_file_binary.data";
 
-# plan tests => 33;
+plan tests => 31;
 
 sub file_test_1 {
 
@@ -121,5 +121,3 @@ test_files(
            \path( "$utf8_test_file"   )->slurp_utf8,
            \path( "$binary_file"      )->slurp,
           );
-
-done_testing;
