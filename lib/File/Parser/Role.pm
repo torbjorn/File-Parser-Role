@@ -13,14 +13,14 @@ use MooX::Aliases;
 
 # File things
 has file     =>  ( is => "ro", alias => [qw/path filepath uri url/] );
-has size     =>  ( is => "ro"   );
-has filename =>  ( is => "ro"   );
+has size     =>  ( is => "ro" );
+has filename =>  ( is => "ro" );
 has encoding =>  ( is => "ro"   );
-has _fh      =>  ( is => "rw"   );
+has fh       =>  ( is => "lazy" );
 
 requires "parse";
 
-sub fh {
+sub _build_fh {
 
     my $self = shift;
 
@@ -36,18 +36,25 @@ sub fh {
         return $fh;
 
     }
+
     ## A scalar reference is assumed to be content to be parsed
     elsif ( ref $self->file eq "SCALAR" ) {
-
         return IO::String->new( $self->file );
+    }
+
+    ## If it's any kind of object, assume it can be <read> from
+    elsif ( ref $self->file ) {
+
+        ## assume its something that can be read from as a file handle
+        ## set encoding and use it
+        if ( defined $self->encoding ) {
+            binmode $self->file, sprintf(":encoding(%s)", $self->encoding) or confess $!;
+        }
+        return $self->file;
 
     }
-    ## If it's some other sort of object, assume it can be <read> from
-    elsif ( ref $self->file ) {
-        ## assume its something that can be read from as a file handle
-        ## - the source of this is in charge of encoding for now
-        return $self->file;
-    }
+
+    ## can't grok it
     else {
         confess "Cannot work with input file - its neither a readable path nor a reference";
     }
@@ -69,7 +76,9 @@ around BUILDARGS => sub {
         $args[0]->{file} = delete $args[0]->{filename};
     }
 
-    my $f = $args[0]->{file};
+    my $obj = $class->$orig(@args);
+
+    my $f = $obj->{file};
 
     ## test if it seems to be a file
     if ( defined $f and -r "$f" ) {
@@ -78,14 +87,14 @@ around BUILDARGS => sub {
 
         ## only sets/overrides size if it is found to be something or
         ## isn't already set
-        $args[0]->{size} = -s $f if -s $f or not exists $args[0]->{size};
+        $obj->{size} = -s "$f";
 
         ## set/override filename at this point
-        $args[0]->{filename} = $f;
+        $obj->{filename} = "$f";
 
     }
 
-    return $class->$orig(@args);
+    return $obj;
 
 };
 
