@@ -22,7 +22,7 @@ my $latin1_test_file = "t/test_data/some_file_latin1.txt";
 my $utf8_test_file   = "t/test_data/some_file_utf8.txt";
 my $binary_file      = "t/test_data/some_file_binary.data";
 
-plan tests => 33;
+plan tests => 36;
 
 sub file_test_1 {
 
@@ -56,6 +56,8 @@ sub test_files {
 
     note( "utf8 file tests" );
 
+    ok( $f1->blob, "content was read" );
+
     my $f2 = TestClass->new({file => $files[1], encoding => "utf8" });
     is( $f1->blob, $f2->blob, "latin1 and utf8 content identical" );
 
@@ -79,8 +81,6 @@ sub test_files {
     }
 
 }
-
-## test on file names
 
 note("Testing on file names");
 test_files( $latin1_test_file, $utf8_test_file, $binary_file );
