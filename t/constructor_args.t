@@ -4,9 +4,8 @@ use strict;
 use warnings;
 
 use Test::Most;
-# use Test::Warnings;
+use Test::Warnings;
 use IO::File;
-use Path::Tiny;
 
 use lib 't/lib';
 use TestClass;
@@ -22,7 +21,21 @@ my $latin1_test_file = "t/test_data/some_file_latin1.txt";
 my $utf8_test_file   = "t/test_data/some_file_utf8.txt";
 my $binary_file      = "t/test_data/some_file_binary.data";
 
-plan tests => 31;
+plan tests => 32;
+
+sub slurp {
+    my $f = shift;
+    local $/;
+    open my $fh, "<", $f;
+    return <$fh>;
+}
+sub slurp_utf8 {
+    my $f = shift;
+    local $/;
+    open my $fh, "<", $f;
+    binmode $fh, ":encoding(utf8)";
+    return <$fh>;
+}
 
 sub file_test_1 {
 
@@ -82,7 +95,7 @@ sub test_files {
 
     my $f2 = TestClass->new({file => $files[1], encoding => "utf8" });
 
-    is( path($utf8_test_file)->slurp_utf8,
+    is( slurp_utf8($utf8_test_file),
         $f2->blob, "read data matches file content");
 
     if ( not ref $files[0] ) {
@@ -94,7 +107,7 @@ sub test_files {
     note( "binary file tests" );
     my $f3 = TestClass->new({file => $files[2] });
     is( -s $binary_file, length $f3->blob, "file size matches contents length" );
-    is( path($binary_file)->slurp, $f3->blob, "read data matches file content");
+    is( slurp($binary_file), $f3->blob, "read data matches file content");
 
     if ( not ref $files[0] ) {
         is( $f3->filename, $binary_file, "file name picked up" );
@@ -117,7 +130,7 @@ test_files( @io_files );
 
 note("Testing on scalar references");
 test_files(
-           \path( "$latin1_test_file" )->slurp,
-           \path( "$utf8_test_file"   )->slurp_utf8,
-           \path( "$binary_file"      )->slurp,
+           \slurp( "$latin1_test_file" ),
+           \slurp_utf8( "$utf8_test_file"   ),
+           \slurp( "$binary_file"      ),
           );
