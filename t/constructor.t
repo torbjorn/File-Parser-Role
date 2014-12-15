@@ -102,5 +102,3 @@ test_files(
            \path( "$utf8_test_file"   )->slurp_utf8,
            \path( "$binary_file"      )->slurp,
           );
-
-done_testing;
