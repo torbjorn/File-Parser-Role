@@ -8,3 +8,12 @@ t/00.load.t
 t/perlcritic.t
 t/pod-coverage.t
 t/pod.t
+t/test_data/some_file_binary.data
+t/test_data/some_file_latin1.txt
+t/test_data/some_file_utf8.txt
+t/oddities.t
+t/constructor.t
+t/constructor_args.t
+t/test_BUILD.t
+t/lib/TestClassWithBuild.pm
+t/lib/TestClass.pm
