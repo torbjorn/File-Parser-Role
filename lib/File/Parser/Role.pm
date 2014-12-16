@@ -71,26 +71,26 @@ around BUILDARGS => sub {
         @args = ({ file => $args[0] });
     }
 
-    if ( not exists $args[0]->{file} and exists $args[0]->{filename} ) {
-        ## delete it now, so that it is set again later if valid
+    if ( not exists $args[0]->{file} and defined $args[0]->{filename} ) {
+        ## filename gets deleted for now and only re-inserted later on
+        ## if proven to be a valid filename
         $args[0]->{file} = delete $args[0]->{filename};
     }
 
+    ## capture the aliases this way
     my $obj = $class->$orig(@args);
-
     my $f = $obj->{file};
 
     ## test if it seems to be a path to a file
-    if ( defined $f and -r "$f" ) {
+    if ( defined $f and -e "$f" ) {
 
         ## size (most likely) and filename can now be set
 
-        ## only sets/overrides size if it is found to be something or
-        ## isn't already set
-        $obj->{size} = -s "$f";
+        ## only sets/overrides size if it isn't already set
+        $obj->{size} = -s "$f" unless exists $obj->{size};
 
-        ## set/override filename at this point
-        $obj->{filename} = "$f";
+        ## set filename if not already set
+        $obj->{filename} = "$f" unless defined $obj->{filename};
 
     }
 

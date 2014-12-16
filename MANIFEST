@@ -17,3 +17,5 @@ t/constructor_args.t
 t/test_BUILD.t
 t/lib/TestClassWithBuild.pm
 t/lib/TestClass.pm
+META.yml
+META.json

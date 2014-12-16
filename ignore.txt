@@ -11,3 +11,5 @@ cover_db
 pod2htm*.tmp
 File-Parser-Role-*
 .git/*
+Meta
+cpan/*

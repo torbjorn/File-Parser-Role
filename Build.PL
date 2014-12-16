@@ -22,6 +22,11 @@ my $builder = Module::Build->new(
         'Test::Warnings'       => '0.010',
         'MooX::Aliases'        => '0.001',
     },
+    recommends => {
+        'Path::Tiny'           => 0,
+        'Mojo::Path'           => 0,
+        'IO::All'              => 0,
+    },
     add_to_cleanup      => [ 'File-Parser-Role-*' ],
 );
 
