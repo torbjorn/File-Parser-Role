@@ -1,2 +1,8 @@
 *~
 Makefile.old
+Build
+*.tar.gz
+META.*
+_build/*
+blib/*
+cpan/*
