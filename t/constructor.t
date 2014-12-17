@@ -22,8 +22,6 @@ my $latin1_test_file = "t/test_data/some_file_latin1.txt";
 my $utf8_test_file   = "t/test_data/some_file_utf8.txt";
 my $binary_file      = "t/test_data/some_file_binary.data";
 
-plan tests => 36;
-
 sub file_test_1 {
 
     my $file = ref $_[0] eq "HASH" ? $_[0]->{file} : $_[0];
@@ -102,3 +100,5 @@ test_files(
            \path( "$utf8_test_file"   )->slurp_utf8,
            \path( "$binary_file"      )->slurp,
           );
+
+done_testing;

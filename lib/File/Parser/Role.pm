@@ -12,7 +12,7 @@ use Moo::Role;
 use MooX::Aliases;
 
 # File things
-has file     =>  ( is => "ro", alias => [qw/path filepath uri url/] );
+has file     =>  ( is => "ro", alias => [qw/path filepath/] );
 has size     =>  ( is => "ro" );
 has filename =>  ( is => "ro" );
 has encoding =>  ( is => "ro"   );

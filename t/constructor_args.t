@@ -21,8 +21,6 @@ my $latin1_test_file = "t/test_data/some_file_latin1.txt";
 my $utf8_test_file   = "t/test_data/some_file_utf8.txt";
 my $binary_file      = "t/test_data/some_file_binary.data";
 
-plan tests => 32;
-
 sub slurp {
     my $f = shift;
     local $/;
@@ -50,8 +48,8 @@ sub file_test_1 {
         [ "file only", $file_arg ],
         [ "arg filename", { filename => $file_arg } ],
         [ "arg path", { path => $file_arg } ],
-        [ "arg uri", { uri => $file_arg } ],
-        [ "arg url", { url => $file_arg } ],
+        # [ "arg uri", { uri => $file_arg } ],
+        # [ "arg url", { url => $file_arg } ],
     );
 
     my $f_ref = TestClass->new(@_);
@@ -134,3 +132,5 @@ test_files(
            \slurp_utf8( "$utf8_test_file"   ),
            \slurp( "$binary_file"      ),
           );
+
+done_testing;

@@ -12,12 +12,8 @@ use Encode;
 
 my $builder = Test::More->builder;
 binmode $builder->output         , ":utf8";
-binmode $builder->failure_output , ":utf8";
-binmode $builder->todo_output    , ":utf8";
 
 my $latin1_test_file = "t/test_data/some_file_latin1.txt";
-my $utf8_test_file   = "t/test_data/some_file_utf8.txt";
-my $binary_file      = "t/test_data/some_file_binary.data";
 
 my $f_ref = TestClass->new( $latin1_test_file );
 my $cmp = {%$f_ref};
