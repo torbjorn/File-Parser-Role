@@ -30,13 +30,14 @@ File::Parser::Role A simple role to make life easier when you parse files.
     1;
 
 
-# And then in some nearby code:
+And then in some nearby code:
 
-my $file_obj = MyFileParser->new( "some.file" );
+    my $file_obj = MyFileParser->new( "some.file" );
 
-print length $file_obj->blob; # blob now has the file content because of our sub parse
+    print length $file_obj->blob; # blob now has the file content because of our sub parse
 
-print $file_obj->size;        # size of file as reported by -s
+    print $file_obj->size;        # size of file as reported by -s
+
 
 =head1 DESCRIPTION
 
