@@ -6,12 +6,25 @@ use warnings;
 use Test::Most;
 use Test::Warnings;
 use IO::File;
-use Path::Tiny;
 
 use lib 't/lib';
 use TestClass;
 
 use Encode;
+
+sub slurp {
+    my $f = shift;
+    local $/;
+    open my $fh, "<", $f;
+    return <$fh>;
+}
+sub slurp_utf8 {
+    my $f = shift;
+    local $/;
+    open my $fh, "<", $f;
+    binmode $fh, ":encoding(utf8)";
+    return <$fh>;
+}
 
 my $builder = Test::More->builder;
 binmode $builder->output         , ":utf8";
@@ -32,7 +45,7 @@ sub file_test_1 {
 
     my $f1 = TestClass->new(@_);
     is( length $f1->blob, -s $latin1_test_file, "file size matches contents length" );
-    is( $f1->blob, path($latin1_test_file)->slurp, "read data matches file content");
+    is( $f1->blob, slurp($latin1_test_file), "read data matches file content");
 
     if ( not ref $file ) {
         is( $f1->filename, $latin1_test_file, "file name picked up" );
@@ -59,7 +72,7 @@ sub test_files {
     my $f2 = TestClass->new({file => $files[1], encoding => "utf8" });
     is( $f1->blob, $f2->blob, "latin1 and utf8 content identical" );
 
-    is( path($utf8_test_file)->slurp_utf8,
+    is( slurp_utf8($utf8_test_file),
         $f2->blob, "read data matches file content");
 
     if ( not ref $files[0] ) {
@@ -71,7 +84,7 @@ sub test_files {
     note( "binary file tests" );
     my $f3 = TestClass->new({file => $files[2] });
     is( -s $binary_file, length $f3->blob, "file size matches contents length" );
-    is( path($binary_file)->slurp, $f3->blob, "read data matches file content");
+    is( slurp($binary_file), $f3->blob, "read data matches file content");
 
     if ( not ref $files[0] ) {
         is( $f3->filename, $binary_file, "file name picked up" );
@@ -96,9 +109,9 @@ test_files( @io_files );
 
 note("Testing on scalar references");
 test_files(
-           \path( "$latin1_test_file" )->slurp,
-           \path( "$utf8_test_file"   )->slurp_utf8,
-           \path( "$binary_file"      )->slurp,
+           \slurp( "$latin1_test_file" ),
+           \slurp_utf8( "$utf8_test_file"   ),
+           \slurp( "$binary_file"      ),
           );
 
 done_testing;
