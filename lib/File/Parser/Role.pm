@@ -136,45 +136,45 @@ handle to the contents of the file.
 
 =head1 SYNOPSIS
 
-package MyClassThatDoesStuffToAFile;
+    package MyClassThatDoesStuffToAFile;
 
-sub parse {
-    my $self = shift;
+    sub parse {
+        my $self = shift;
 
-    # ... do stuff, $self->fh available
-}
+        # ... do stuff, $self->fh available
+    }
 
-with "File::Parser::Role";
+    with "File::Parser::Role";
 
-## ... and in some nearby code:
+    ## ... and in some nearby code:
 
-my $obj = MyClassThatDoesStuffToAFile->new("some_file.txt");
-# or #
-my $obj = MyClassThatDoesStuffToAFile->new(file => "some_file.txt");
-## optinally:
+    my $obj = MyClassThatDoesStuffToAFile->new("some_file.txt");
+    # or #
+    my $obj = MyClassThatDoesStuffToAFile->new(file => "some_file.txt");
+    ## optinally:
 
-my $obj = MyClassThatDoesStuffToAFile->new( file => "some_file.txt", encoding => "utf8" );
-## encoding can be anything that binmode's encoding() can understand.
+    my $obj = MyClassThatDoesStuffToAFile->new( file => "some_file.txt", encoding => "utf8" );
+    ## encoding can be anything that binmode's encoding() can understand.
 
-print $obj->filename; # "some_file.txt"
-print $obj->size;     # size of some_file.txt
+    print $obj->filename; # "some_file.txt"
+    print $obj->size;     # size of some_file.txt
 
-## - OR -
+    ## - OR -
 
-my $fh = IO::File->new( "< some_file.txt" );
-## you are now responsible for encoding on this handle!
+    my $fh = IO::File->new( "< some_file.txt" );
+    ## you are now responsible for encoding on this handle!
 
-my $obj = MyClassThatDoesStuffToAFile->new( file => $fh );
+    my $obj = MyClassThatDoesStuffToAFile->new( file => $fh );
 
-## no filename nor file size available
+    ## no filename nor file size available
 
-## - OR -
+    ## - OR -
 
-my $file_content = read_file( "some_file.txt" );
-my $obj = MyClassThatDoesStuffToAFile->new( file => \$file_content );
+    my $file_content = read_file( "some_file.txt" );
+    my $obj = MyClassThatDoesStuffToAFile->new( file => \$file_content );
 
-## you are also responsible for encoding on this data
-## no file name nor file size available
+    ## you are also responsible for encoding on this data
+    ## no file name nor file size available
 
 =head1 DESCRIPTION
 
