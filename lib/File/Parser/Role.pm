@@ -178,14 +178,49 @@ my $obj = MyClassThatDoesStuffToAFile->new( file => \$file_content );
 
 =head1 DESCRIPTION
 
+This role provides all the bare necessities, and then some, that you
+expect when you want to parse or otherwise handle a chunk of content
+typically provided as a file.
 
+It is motivated by and ideal for objects that parse files.
 
 =head1 INTERFACE
 
+=head2 new
+
+The constructor is meant to be all expected kinds of flexible:
+
+=over
+
+=item * new("file")
+
+=item * new($fh)
+
+=item * new( file => "file", encoding => "utf8" ); # also works with: C<new({ ... })>
+
+=item * new( \"some content" )
+
+=back
+
+Construction tests the argument and if it's a path to a file reachable
+on the local file system records its C<filename> and C<size> in those
+two attributes.
+
+When it checks if the argument if a local filename, it checks "$file",
+allowing objects that stringify to paths to work correctly. This
+applies among others to Path::Tiny.
+
+If a reference to something is passed (or an object), it is assumed to
+be something that can be read with <> and passed for a handle.
+
 =head2 fh
 
-Returns ro filehandle (IO::File) to the contents of the input, be it a
-file or a sclar reference or an already opened file handle
+Returns ro handle (IO::File for files, IO::String for content) to the
+contents of the input, be it a file or a sclar reference or an already
+opened file handle
+
+If the input argument is assumed to be a readable handle to content,
+it is passed straight through with this method.
 
 =head2 parse
 
@@ -193,9 +228,11 @@ A required method that you must write! It is run in BUILD
 
 =head1 DIAGNOSTICS
 
+=over
+
 =item C<< Cannot work with input file >>
 
-The file argument is neither a readable file, an object nor a
+The file argument is neither an existing file, an object nor a
 reference to content
 
 =back
@@ -226,6 +263,7 @@ reference to content
 
 =item * L<MooX::Aliases>
 
+=back
 
 =head1 INCOMPATIBILITIES
 

@@ -34,11 +34,9 @@ with "File::Parser::Role";
 
 my $file_obj = MyFileParser->new( "some.file" );
 
-print length $file_obj->blob; # length of input file content
+print length $file_obj->blob; # blob now has the file content because of our sub parse
 
 print $file_obj->size;        # size of file as reported by -s
-
-
 
 =head1 DESCRIPTION
 
