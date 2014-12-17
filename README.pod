@@ -8,26 +8,26 @@ File::Parser::Role A simple role to make life easier when you parse files.
 
 =head1 SYNOPSIS
 
-package MyFileParser;
+    package MyFileParser;
 
-use Moo;
-has blob => ( is => "rw" );
+    use Moo;
+    has blob => ( is => "rw" );
 
-sub parse {
+    sub parse {
 
-  my $self = shift;
-  my $fh = $self->fh;
+      my $self = shift;
+      my $fh = $self->fh;
 
-  local $/;
+      local $/;
 
-  # just stuff it here, so not really parsing it
-  $self->blob( <$fh> );
+      # just stuff it here, so not really parsing it
+      $self->blob( <$fh> );
 
-}
+    }
 
-with "File::Parser::Role";
+    with "File::Parser::Role";
 
-1;
+    1;
 
 
 # And then in some nearby code:
