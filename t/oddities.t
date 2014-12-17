@@ -2,10 +2,8 @@
 
 use strict;
 use warnings;
-use Test::Most;
+use Test::Most tests => 8+1;
 use Test::Warnings;
-
-use Module::Load::Conditional qw/check_install/;
 
 use lib 't/lib';
 use TestClass;
@@ -26,9 +24,11 @@ my $cmp = {%$f_ref};
 $cmp->{fh} = ignore;
 $cmp->{file} = "$cmp->{file}";
 
-if ( check_install( module => "Path::Tiny" ) ) {
+SKIP: {
 
-    require Path::Tiny;
+    eval { require Path::Tiny };
+    skip "Path::Tiny is not installed", 2 if $@;
+
     Path::Tiny->import("path");
 
     isa_ok my $f = path($latin1_test_file), "Path::Tiny";
@@ -45,10 +45,12 @@ if ( check_install( module => "Path::Tiny" ) ) {
 
 }
 
-if ( check_install( module => "IO::All" ) ) {
+SKIP: {
 
-    require IO::All;
+    eval { require IO::All };
     IO::All->import("io");
+
+    skip "IO::All is not installed", 2 if $@;
 
     isa_ok my $f = io($latin1_test_file), "IO::All";
     my $obj = TestClass->new($f);
@@ -64,9 +66,10 @@ if ( check_install( module => "IO::All" ) ) {
 
 }
 
-if ( check_install( module => "Mojo::Path" ) ) {
+SKIP: {
 
-    require Mojo::Path;
+    eval { require Mojo::Path };
+    skip "Mojo::Path is not installed", 2 if $@;
 
     isa_ok my $f = Mojo::Path->new($latin1_test_file), "Mojo::Path";
     my $obj = TestClass->new($f);
@@ -83,9 +86,11 @@ if ( check_install( module => "Mojo::Path" ) ) {
 }
 
 ## its already tested elsewhere but whattheheck
-if ( check_install( module => "IO::File" ) ) {
+SKIP: {
 
-    require IO::File;
+    eval { require IO::File };
+
+    skip "IO::File is not installed", 2 if $@;
 
     isa_ok my $f = IO::File->new($latin1_test_file), "IO::File";
     my $obj = TestClass->new($f);
@@ -100,5 +105,3 @@ if ( check_install( module => "IO::File" ) ) {
     );
 
 }
-
-done_testing;
