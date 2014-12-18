@@ -263,6 +263,10 @@ reference to content
 
 None reported.
 
+=head1 REPOSITORY
+
+L<https://github.com/torbjorn/File-Parser-Role>
+
 =head1 BUGS AND LIMITATIONS
 
 No bugs have been reported.
