@@ -9,7 +9,7 @@ use Carp;
 use IO::File;
 use IO::String;
 
-use version; our $VERSION = qv('0.2.2');
+use version; our $VERSION = qv('0.2.3');
 use Moo::Role;
 use MooX::Aliases;
 
@@ -117,7 +117,7 @@ from some source
 
 =head1 VERSION
 
-This document describes File::Parser::Role version 0.2.2 This is a
+This document describes File::Parser::Role version 0.2.3 This is a
 Moo::Role for reading (and then parsing) single data files. It makes
 the constructor support 3 kinds of file sources:
 
