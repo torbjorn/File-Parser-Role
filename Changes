@@ -1,5 +1,8 @@
 Revision history for File-Parser-Role
 
+0.2.2 2014-12-18 10:38:19
+      put author tests in xt
+
 0.2.1 2014-12-17 21:55:25
       Fixed ugly pod
 
