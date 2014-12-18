@@ -247,23 +247,15 @@ reference to content
 
 =item * L<Moo::Role>
 
+=item * L<MooX::Aliases>
+
 =item * L<IO::String>
 
-=item * L<Pod::Coverage::Moose>
-
 =item * L<Test::Most>
-
-=item * L<Test::Perl::Critic>
-
-=item * L<Test::Pod>
-
-=item * L<Test::Pod::Coverage>
 
 =item * L<Test::Output>
 
 =item * L<Test::Warnings>
-
-=item * L<MooX::Aliases>
 
 =back
 
