@@ -4,7 +4,6 @@ use strict;
 use warnings;
 
 use Moo;
-use feature 'say';
 
 has blob => ( is => "rw" );
 
