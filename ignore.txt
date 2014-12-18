@@ -13,3 +13,4 @@ File-Parser-Role-*
 .git/*
 Meta
 cpan/*
+xt/*
