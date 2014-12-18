@@ -182,7 +182,7 @@ This role provides all the bare necessities, and then some, that you
 expect when you want to parse or otherwise handle a chunk of content
 typically provided as a file.
 
-It is motivated by and ideal for objects that parse files.
+It is motivated by, and ideal for, objects that parse files.
 
 =head1 INTERFACE
 
