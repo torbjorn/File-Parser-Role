@@ -22,10 +22,8 @@ $cmp->{file} = "$cmp->{file}";
 
 SKIP: {
 
-    eval { require Path::Tiny };
+    eval { require Path::Tiny; Path::Tiny->import("path"); };
     skip "Path::Tiny is not installed", 2 if $@;
-
-    Path::Tiny->import("path");
 
     isa_ok my $f = path($latin1_test_file), "Path::Tiny";
     my $obj = TestClass->new($f);
@@ -43,9 +41,7 @@ SKIP: {
 
 SKIP: {
 
-    eval { require IO::All };
-    IO::All->import("io");
-
+    eval { require IO::All; IO::All->import("io"); };
     skip "IO::All is not installed", 2 if $@;
 
     isa_ok my $f = io($latin1_test_file), "IO::All";
