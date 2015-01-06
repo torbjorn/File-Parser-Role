@@ -1,5 +1,8 @@
 Revision history for File-Parser-Role
 
+0.2.4 2015-01-06 09:18:19
+      fixed test failures on odd platforms
+
 0.2.3 2014-12-18 10:43:34
       took out use feature from test class. wasn't using it.
 
